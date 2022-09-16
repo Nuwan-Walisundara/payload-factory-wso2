@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/format" name="jsonToJson" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST GET">
+        <inSequence>
+            <foreach expression="//records" id="foreach_1">
+                <sequence>
+                    <payloadFactory media-type="json">
+                        <format>
+                         {"records":
+                       [{"attributes":$1,
+                        "Sent_to_MM__c":$2,
+                        "Id":$3,
+                        "compID":"$4" }
+                        ]
+                    
+                    }
+
+                </format>
+                        <args>
+                            <arg evaluator="json" expression="$.records.attributes"/>
+                            <arg evaluator="json" expression="$.records.Sent_to_MM__c"/>
+                            <arg evaluator="json" expression="$.records.Id"/>
+                            <arg evaluator="json" expression="$.records.Acc_CompetitionCode__c"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
